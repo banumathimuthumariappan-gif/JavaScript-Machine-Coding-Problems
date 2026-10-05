@@ -890,7 +890,6 @@ console.log(findPairWithSum([1, 2, 3], 10));
 
 
 
-
 // ============================================================
 // PROBLEM 14: Merge Two Sorted Arrays
 // ============================================================
@@ -902,9 +901,68 @@ console.log(findPairWithSum([1, 2, 3], 10));
 // Output:
 // [1, 2, 3, 4, 5, 6]
 
+console.log("Merge 2 sorted arrays: ");
+function mergeSortedArrays(arr1, arr2) {
+    let i = 0;
+    let j = 0;
+    let result = [];
+
+    while(i < arr1.length && j < arr2.length) {
+        if(arr1[i] < arr2[j]) {
+            result.push(arr1[i]);
+            i++
+        } else {
+            result.push(arr2[j]);
+            j++;
+        }
+    }
+    while(i < arr1.length) {
+        result.push(arr1[i]);
+        i++;
+    }
+    while(j < arr2.length) {
+        result.push(arr2[j]);
+        j++;
+    }
+    return result;
+}
 
 
+console.log(mergeSortedArrays([1, 3, 5], [2, 4, 6]));
+// [1, 2, 3, 4, 5, 6]
 
+console.log(mergeSortedArrays([1, 2, 3], [4, 5, 6]));
+// [1, 2, 3, 4, 5, 6]
+
+console.log(mergeSortedArrays([2, 4, 6], [1, 3, 5]));
+// [1, 2, 3, 4, 5, 6]
+
+console.log(mergeSortedArrays([], [1, 2, 3]));
+// [1, 2, 3]
+
+console.log(mergeSortedArrays([1, 3], []));
+// [1, 3]
+
+console.log(mergeSortedArrays([1, 2, 2], [2, 3, 4]));
+// [1, 2, 2, 2, 3, 4]
+
+
+// ============================================================
+// COMPLEXITY
+// ============================================================
+
+// Time Complexity: O(n + m)
+//
+// n = length of arr1
+// m = length of arr2
+//
+// Each element is processed once.
+//
+// Space Complexity: O(n + m)
+//
+// Result array stores all elements.
+//
+// ============================================================
 
 
 
@@ -1731,9 +1789,75 @@ console.log(capitalizeWords(""));
 
 
 
-// TO DO: Valid Paranthesis
+// ============================================================
+// PROBLEM: Valid Parentheses
+// ============================================================
+
+// Example:
+// Input:  "{[()]}"
+// Output: true
+
+console.log("Valid Paranthesis");
+
+function isValidParentheses(str) {
+    let stack = [];
+    let matchingBracket = {
+        ')' : '(',
+        '}' : '{',
+        ']' : '['
+    };
+    for(let char of str) {
+        if(char == '(' || char == '{' || char == '[') {
+            stack.push(char);
+        } else {
+            const lastElement = stack.pop();
+            if(lastElement !== matchingBracket[char]) {
+                return false;
+            }
+        }
+    }
+    return stack.length === 0;
+}
+
+console.log(isValidParentheses("()"));
+// true
+
+console.log(isValidParentheses("()[]{}"));
+// true
+
+console.log(isValidParentheses("{[]}"));
+// true
+
+console.log(isValidParentheses("([{}])"));
+// true
+
+console.log(isValidParentheses("(]"));
+// false
+
+console.log(isValidParentheses("([)]"));
+// false
+
+console.log(isValidParentheses("((("));
+// false
+
+console.log(isValidParentheses(""));
+// true
 
 
+// ============================================================
+// COMPLEXITY
+// ============================================================
+
+// Time Complexity: O(n)
+//
+// We visit every character once.
+//
+// Space Complexity: O(n)
+//
+// In the worst case, all characters can be opening brackets
+// and will be stored in the stack.
+//
+// ============================================================
 
 
 
@@ -1905,7 +2029,63 @@ console.log(flattenArray([]));
 
 
 
-// TO DO: Compress String
+// ============================================================
+// PROBLEM: Compress String
+// ============================================================
+
+// Example:
+// Input:  "aaabbc"
+// Output: "a3b2c1"
+
+console.log("Compress String");
+
+function compressString(str) {
+    let result = '';
+    let count = 1;
+
+    for(let i = 1; i <= str.length; i++) {
+        if(str[i] === str[i - 1]) {
+            count++;
+        } else {
+            result += str[i - 1] + count;
+            count = 1;
+        }
+    }
+    return result;
+}
+
+console.log(compressString("aaabbc"));
+// "a3b2c1"
+
+console.log(compressString("aaabbbcccc"));
+// "a3b3c4"
+
+console.log(compressString("abcd"));
+// "a1b1c1d1"
+
+console.log(compressString("aaaa"));
+// "a4"
+
+console.log(compressString("a"));
+// "a1"
+
+console.log(compressString(""));
+// ""
+
+
+// ============================================================
+// COMPLEXITY
+// ============================================================
+
+// Time Complexity: O(n)
+//
+// We traverse the string once.
+//
+// Space Complexity: O(n)
+//
+// The result string can contain up to O(n) characters.
+//
+// ============================================================
 
 
 
